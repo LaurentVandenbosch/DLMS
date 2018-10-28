@@ -2,7 +2,7 @@
 
 const amqp = require('amqplib/callback_api');
 
-const MongoClient = require('mongodb').MongoClient;
+const { MongoClient } = require('mongodb');
 const host = process.env.MONGO_HOST || 'localhost';
 const url = 'mongodb://' + host + ':27017';
 
@@ -24,7 +24,10 @@ MongoClient.connect(url, function(err, client) {
       console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", q);
       ch.consume(q, function(msg) {
         console.log(" [x] Received %s", msg.content.toString());
-        db.collection(q).insertOne({"payload":msg.content.toString()});
+        db.collection("messages").insertOne({
+          "queue" : q,
+          "payload":msg.content.toString()
+          });
         ch.ack(msg);
       }, {noAck: false});
     });
