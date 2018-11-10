@@ -17,11 +17,17 @@ const server = Hapi.server({
 server.route({
     method: 'GET',
     path: '/messages',
+    options: {
+        cors: true
+    },
     handler: function (request, h) {
         return new Promise((resolve) => {
             MongoClient.connect(url, function(err, client) {
                 const collection = client.db(dbName).collection(collectionName);
-                resolve(collection.find().toArray());
+                collection.find().toArray()
+                .then(messages => {
+                     resolve({messages}); 
+                });
             });
         });
         
