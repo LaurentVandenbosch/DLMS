@@ -1,8 +1,12 @@
 {
   "name": "dlms-worker",
   "version": "1.0.0",
-  "description": "",
+  "description": "This is the worker for the DLMS project. It subscribe to DLQs and move the messages to a mongo database.",
   "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LaurentVandenbosch/DLMS.git"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -12,7 +16,7 @@
     }
   },
   "author": "",
-  "license": "ISC",
+  "license": "GPL-3.0-only",
   "dependencies": {
     "amqplib": "^0.5.2",
     "mongodb": "^3.1.8"

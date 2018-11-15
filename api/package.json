@@ -1,11 +1,15 @@
 {
   "name": "dlms-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "This is the api for the DLMS project.",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LaurentVandenbosch/DLMS.git"
   },
   "husky": {
     "hooks": {
@@ -13,7 +17,7 @@
     }
   },
   "author": "",
-  "license": "ISC",
+  "license": "GPL-3.0-only",
   "dependencies": {
     "hapi": "^17.6.4",
     "mongodb": "^3.1.8"

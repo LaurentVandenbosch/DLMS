@@ -1,7 +1,12 @@
 {
   "name": "dlms-ui",
   "version": "0.1.0",
-  "private": true,
+  "description": "The UI of the DLMS project.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LaurentVandenbosch/DLMS.git"
+  },
+  "license": "GPL-3.0-only",
   "dependencies": {
     "grommet": "^2.0.1",
     "grommet-icons": "^3.2.0",

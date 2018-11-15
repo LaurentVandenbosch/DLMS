@@ -1,48 +1,54 @@
 #!/usr/bin/env node
 
-const amqp = require('amqplib/callback_api');
-
-const { MongoClient } = require('mongodb');
-const host = process.env.MONGO_HOST || 'localhost';
-const url = 'mongodb://' + host + ':27017';
-
 const assert = require('assert');
 
-const dbName = 'DLMS';
+const { MongoClient } = require('mongodb');
+const mongoSettings = require('./settings/mongo');
 
+const amqp = require('amqplib/callback_api');
+const rabbitSettings = require('./settings/rabbit');
+const CannotConnectToRabbitMQError = require('./errors/CannotConnectToRabbitMQError');
+
+console.log(`Connecting to mongo server ${mongoSettings.uri}...`);
 MongoClient.connect(
-  url,
+  mongoSettings.uri,
+  { useNewUrlParser: true },
   function(err, client) {
-    assert.equal(null, err);
+    assert.strictEqual(err, null);
     console.log('Connected successfully to server');
 
-    const db = client.db(dbName);
+    const db = client.db(mongoSettings.dbName);
+    setTimeout(() => {
+      console.log(`Connecting to rabbitmq server ${rabbitSettings.uri}`);
+      amqp.connect(
+        rabbitSettings.uri,
+        function(err, conn) {
+          assert.strictEqual(err, null, new CannotConnectToRabbitMQError());
+          conn.createChannel(function(err, ch) {
+            const q = 'hello';
 
-    amqp.connect(
-      'amqp://localhost',
-      function(err, conn) {
-        conn.createChannel(function(err, ch) {
-          const q = 'hello';
-
-          ch.assertQueue(q, { durable: false });
-          console.log(
-            ' [*] Waiting for messages in %s. To exit press CTRL+C',
-            q
-          );
-          ch.consume(
-            q,
-            function(msg) {
-              console.log(' [x] Received %s', msg.content.toString());
-              db.collection('messages').insertOne({
-                queue: q,
-                payload: msg.content.toString(),
-              });
-              ch.ack(msg);
-            },
-            { noAck: false }
-          );
-        });
-      }
-    );
+            ch.assertQueue(q, { durable: false });
+            console.log(
+              ' [*] Waiting for messages in %s. To exit press CTRL+C',
+              q
+            );
+            ch.consume(
+              q,
+              function(msg) {
+                console.log('message : ');
+                console.log(msg);
+                console.log(' [x] Received %s', msg.content.toString());
+                db.collection('messages').insertOne({
+                  queue: q,
+                  payload: msg.content.toString(),
+                });
+                ch.ack(msg);
+              },
+              { noAck: false }
+            );
+          });
+        }
+      );
+    }, 15000);
   }
 );
