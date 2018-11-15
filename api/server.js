@@ -1,15 +1,15 @@
 'use strict';
 const { MongoClient } = require('mongodb');
 const host = process.env.MONGO_HOST || 'localhost';
-const url = 'mongodb://' + host + ':27017';
-const dbName = 'DLMS';
+const port = process.env.MONGO_PORT || '27017';
+const dbName = process.env.MONGO_DBNAME || 'DLMS';
+const uri = `mongodb://${host}:${port}`;
 const collectionName = 'messages';
 
 const Hapi = require('hapi');
 
 // Create a server with a host and port
 const server = Hapi.server({
-  host: 'localhost',
   port: 8000,
 });
 
@@ -23,7 +23,7 @@ server.route({
   handler: function(request, h) {
     return new Promise(resolve => {
       MongoClient.connect(
-        url,
+        uri,
         function(err, client) {
           const collection = client.db(dbName).collection(collectionName);
           collection
