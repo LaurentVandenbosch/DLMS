@@ -35,12 +35,14 @@ MongoClient.connect(
             ch.consume(
               q,
               function(msg) {
-                console.log('message : ');
-                console.log(msg);
                 console.log(' [x] Received %s', msg.content.toString());
                 db.collection('messages').insertOne({
+                  acknowledgedOn: new Date().toISOString(),
                   queue: q,
+                  fields: msg.fields,
+                  properties: msg.properties,
                   payload: msg.content.toString(),
+                  status: 'New',
                 });
                 ch.ack(msg);
               },
