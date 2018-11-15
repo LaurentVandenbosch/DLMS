@@ -7,10 +7,20 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "hapi": "^17.6.4",
     "mongodb": "^3.1.8"
+  },
+  "devDependencies": {
+    "husky": "^1.1.4",
+    "prettier": "1.15.2",
+    "pretty-quick": "^1.8.0"
   }
 }
