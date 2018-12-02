@@ -1,7 +1,9 @@
 version: '3'
 services:
   worker:
-    build: ./worker
+    image: 'node:11-alpine'
+    working_dir: /usr/src/app
+    command: npm run watch
     depends_on:
       - mongo
       - rabbitmq
@@ -11,14 +13,20 @@ services:
       - MONGO_DBNAME=DLMS
       - RABBIT_HOST=rabbitmq
       - RABBIT_PORT=5672
+    volumes:
+      - ./worker:/usr/src/app
   api:
-    build: ./api
+    image: 'node:11-alpine'
+    working_dir: /usr/src/app
+    command: npm run watch
     depends_on:
       - mongo
     environment:
       - MONGO_HOST=mongo
       - MONGO_PORT=27017
       - MONGO_DBNAME=DLMS
+    volumes:
+      - ./api:/usr/src/app
     ports:
       - '8000:8000'
   ui:

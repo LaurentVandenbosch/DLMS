@@ -13,7 +13,7 @@ console.log(`Connecting to mongo server ${mongoSettings.uri}...`);
 MongoClient.connect(
   mongoSettings.uri,
   { useNewUrlParser: true },
-  function(err, client) {
+  function (err, client) {
     assert.strictEqual(err, null);
     console.log('Connected successfully to server');
 
@@ -22,9 +22,9 @@ MongoClient.connect(
       console.log(`Connecting to rabbitmq server ${rabbitSettings.uri}`);
       amqp.connect(
         rabbitSettings.uri,
-        function(err, conn) {
+        function (err, conn) {
           assert.strictEqual(err, null, new CannotConnectToRabbitMQError());
-          conn.createChannel(function(err, ch) {
+          conn.createChannel(function (err, ch) {
             const q = 'hello';
 
             ch.assertQueue(q, { durable: false });
@@ -34,7 +34,7 @@ MongoClient.connect(
             );
             ch.consume(
               q,
-              function(msg) {
+              function (msg) {
                 console.log(' [x] Received %s', msg.content.toString());
                 db.collection('messages').insertOne({
                   acknowledgedOn: new Date().toISOString(),

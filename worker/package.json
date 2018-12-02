@@ -8,7 +8,9 @@
     "url": "https://github.com/LaurentVandenbosch/DLMS.git"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "watch": "nodemon -L server.js"
   },
   "husky": {
     "hooks": {
@@ -19,7 +21,8 @@
   "license": "GPL-3.0-only",
   "dependencies": {
     "amqplib": "^0.5.2",
-    "mongodb": "^3.1.8"
+    "mongodb": "^3.1.8",
+    "nodemon": "^1.18.7"
   },
   "devDependencies": {
     "husky": "^1.1.4",

@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "watch": "nodemon -L server.js"
   },
   "repository": {
     "type": "git",
@@ -20,7 +21,8 @@
   "license": "GPL-3.0-only",
   "dependencies": {
     "hapi": "^17.6.4",
-    "mongodb": "^3.1.8"
+    "mongodb": "^3.1.8",
+    "nodemon": "^1.18.7"
   },
   "devDependencies": {
     "husky": "^1.1.4",

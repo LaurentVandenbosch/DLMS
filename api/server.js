@@ -8,7 +8,7 @@ const collectionName = 'messages';
 
 const Hapi = require('hapi');
 
-// Create a server with a host and port
+// Create a server with a host and port 
 const server = Hapi.server({
   port: 8000,
 });
@@ -20,11 +20,11 @@ server.route({
   options: {
     cors: true,
   },
-  handler: function(request, h) {
+  handler: function (request, h) {
     return new Promise(resolve => {
       MongoClient.connect(
         uri,
-        function(err, client) {
+        function (err, client) {
           const collection = client.db(dbName).collection(collectionName);
           collection
             .find()
