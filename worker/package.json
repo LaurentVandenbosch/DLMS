@@ -2,14 +2,14 @@
   "name": "dlms-worker",
   "version": "1.0.0",
   "description": "This is the worker for the DLMS project. It subscribe to DLQs and move the messages to a mongo database.",
-  "main": "server.js",
+  "main": "src/server.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/LaurentVandenbosch/DLMS.git"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
+    "start": "node src/server.js",
     "watch": "nodemon -L server.js"
   },
   "husky": {
