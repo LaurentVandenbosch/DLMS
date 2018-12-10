@@ -1,16 +1,16 @@
 {
-  "name": "dlms-api",
+  "name": "dlms-worker",
   "version": "1.0.0",
-  "description": "This is the api for the DLMS project.",
-  "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
-    "watch": "nodemon -L server.js"
-  },
+  "description": "This is the worker for the DLMS project. It subscribe to DLQs and move the messages to a mongo database.",
+  "main": "src/server.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/LaurentVandenbosch/DLMS.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/index.js",
+    "watch": "nodemon -L src/index.js"
   },
   "husky": {
     "hooks": {
@@ -20,7 +20,8 @@
   "author": "",
   "license": "GPL-3.0-only",
   "dependencies": {
-    "hapi": "^17.6.4",
+    "amqplib": "^0.5.2",
+    "hapi": "^17.8.1",
     "mongodb": "^3.1.8"
   },
   "devDependencies": {
